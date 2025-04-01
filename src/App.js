@@ -1,80 +1,98 @@
-import React, { useState } from "react";
+import React from 'react';
 
-const courses = {
-  "Year 1": [
-    { code: "CHEM 121", name: "General Chemistry and Laboratory I", credits: 4 },
-    { code: "CHEM 122", name: "General Chemistry II", credits: 2 },
-    { code: "CHEM 126", name: "General Chemistry Laboratory II", credits: 2 },
-    { code: "MATH 152", name: "Calculus II", credits: 3 },
-    { code: "BISC 101", name: "General Biology", credits: 4 },
-    { code: "BISC 102", name: "General Biology", credits: 4 },
-    { code: "MATH 150", name: "Calculus I with Review", credits: 4, electiveGroup: "Calculus" },
-    { code: "MATH 151", name: "Calculus I", credits: 3, electiveGroup: "Calculus" },
-  ],
-  "Year 2": [
-    { code: "CHEM 210", name: "Introduction to Analytical Chemistry", credits: 2 },
-    { code: "CHEM 216", name: "Introduction to Analytical Chemistry Laboratory", credits: 2 },
-    { code: "CHEM 260", name: "Atoms, Molecules, Spectroscopy", credits: 4 },
-    { code: "BISC 202", name: "Genetics", credits: 3 },
-    { code: "MBB 222", name: "Molecular Biology and Biochemistry", credits: 3 },
-    { code: "MBB 231", name: "Cellular Biology and Biochemistry", credits: 3 },
-    { code: "STAT 201", name: "Statistics for the Life Sciences", credits: 3, electiveGroup: "Statistics" },
-    { code: "STAT 270", name: "Introduction to Probability and Statistics", credits: 3, electiveGroup: "Statistics" },
-  ],
-  "Year 3": [
-    { code: "CHEM 316", name: "Introductory Instrumental Analysis", credits: 4 },
-    { code: "CHEM 332", name: "The Chemistry of Transition Metals", credits: 3 },
-    { code: "CHEM 380", name: "Chemical and Instrumental Methods of Identification of Organic Compounds", credits: 4 },
-    { code: "MBB 309W", name: "Biochemistry Laboratory", credits: 4 },
-  ],
-  "Year 4": [
-    { code: "MBB 321", name: "Intermediary Metabolism", credits: 3 },
-    { code: "MBB 331", name: "Molecular Biology", credits: 4 },
-    { code: "CHEM 360", name: "Thermodynamics and Chemical Kinetics", credits: 3, electiveGroup: "Advanced Chemistry" },
-    { code: "MBB 323", name: "Introduction to Physical Biochemistry", credits: 3, electiveGroup: "Advanced Chemistry" },
-  ],
-};
-
-function App() {
-  const [checked, setChecked] = useState({});
-  const [selectedElectives, setSelectedElectives] = useState({});
-
-  const toggleCheck = (code, electiveGroup) => {
-    if (electiveGroup) {
-      setSelectedElectives((prev) => {
-        const updatedGroup = prev[electiveGroup] === code ? null : code;
-        return { ...prev, [electiveGroup]: updatedGroup };
-      });
-    } else {
-      setChecked((prev) => ({ ...prev, [code]: !prev[code] }));
-    }
-  };
-
+const ProgramRequirements = () => {
   return (
-    <div className="p-4 space-y-4">
-      {Object.entries(courses).map(([year, subjects]) => (
-        <div key={year} className="p-4 border rounded-lg shadow-lg">
-          <h2 className="text-xl font-bold mb-2">{year}</h2>
-          {subjects.map(({ code, name, credits, electiveGroup }) => (
-            <div key={code} className="flex justify-between items-center border-b py-2">
-              <div>
-                <p className="font-medium">
-                  {code} - {name} ({credits} credits){" "}
-                  {electiveGroup ? "(Choose one)" : ""}
-                </p>
-              </div>
-              <input
-                type="checkbox"
-                checked={electiveGroup ? selectedElectives[electiveGroup] === code : checked[code] || false}
-                onChange={() => toggleCheck(code, electiveGroup)}
-                className="w-5 h-5"
-              />
-            </div>
-          ))}
-        </div>
-      ))}
+    <div>
+      <h1>Program Requirements</h1>
+
+      <h2>Lower Division Requirements</h2>
+      <p>Students must complete all of the following courses:</p>
+      <ul>
+        <li>CHEM 121 - General Chemistry and Laboratory I (4)</li>
+        <li>CHEM 122 - General Chemistry II (2)</li>
+        <li>CHEM 126 - General Chemistry Laboratory II (2)</li>
+        <li>CHEM 210 - Introduction to Analytical Chemistry (2)</li>
+        <li>CHEM 216 - Introduction to Analytical Chemistry Laboratory (2)</li>
+        <li>CHEM 230 - Inorganic Chemistry (3)</li>
+        <li>CHEM 236W - Inorganic Chemistry Laboratory (3)</li>
+        <li>CHEM 260 - Atoms, Molecules, Spectroscopy (4)</li>
+        <li>CHEM 281 - Organic Chemistry and Laboratory I (4)</li>
+        <li>CHEM 283 - Organic Chemistry IIb (3)</li>
+        <li>CHEM 286 - Organic Chemistry Laboratory II (2)</li>
+        <li>MATH 152 - Calculus II (3)</li>
+        <li>BISC 101 - General Biology (4)</li>
+        <li>BISC 102 - General Biology (4)</li>
+        <li>BISC 202 - Genetics (3)</li>
+        <li>MBB 222 - Molecular Biology and Biochemistry (3)</li>
+        <li>MBB 231 - Cellular Biology and Biochemistry (3)</li>
+      </ul>
+
+      <h3>Additional Course Options</h3>
+      <p><strong>One of the following Calculus Courses:</strong></p>
+      <ul>
+        <li>MATH 150 - Calculus I with Review (4)</li>
+        <li>MATH 151 - Calculus I (3)</li>
+      </ul>
+
+      <p><strong>One of the following Statistics Courses:</strong></p>
+      <ul>
+        <li>STAT 201 - Statistics for the Life Sciences (3)</li>
+        <li>STAT 270 - Introduction to Probability and Statistics (3)</li>
+      </ul>
+
+      <h3>Physics Courses</h3>
+      <p><strong>All of the following Physics Courses:</strong></p>
+      <ul>
+        <li>PHYS 120 - Mechanics and Modern Physics (3)</li>
+        <li>PHYS 121 - Optics, Electricity and Magnetism (3)</li>
+        <li>PHYS 132 - Physics Laboratory I (1)</li>
+        <li>PHYS 133 - Physics Laboratory II (1)</li>
+      </ul>
+
+      <p><strong>OR one of the following alternatives:</strong></p>
+
+      <ul>
+        <li>PHYS 125 - Mechanics and Special Relativity (3)</li>
+        <li>PHYS 126 - Electricity, Magnetism and Light (3)</li>
+        <li>PHYS 132 - Physics Laboratory I (1)</li>
+        <li>PHYS 133 - Physics Laboratory II (1)</li>
+      </ul>
+
+      <p><strong>OR one of the following:</strong></p>
+      <ul>
+        <li>PHYS 101 - Physics for the Life Sciences I (3)</li>
+        <li>PHYS 102 - Physics for the Life Sciences II (3)</li>
+        <li>PHYS 132 - Physics Laboratory I (1)</li>
+        <li>PHYS 133 - Physics Laboratory II (1)</li>
+      </ul>
+
+      <p><strong>OR both of the following:</strong></p>
+      <ul>
+        <li>PHYS 140 - Studio Physics - Mechanics and Modern Physics (4)</li>
+        <li>PHYS 141 - Studio Physics - Optics, Electricity and Magnetism (4)</li>
+      </ul>
+
+      <h2>Upper Division Requirements</h2>
+      <p>Students must complete all of the following courses:</p>
+      <ul>
+        <li>CHEM 316 - Introductory Instrumental Analysis (4)</li>
+        <li>CHEM 332 - The Chemistry of Transition Metals (3)</li>
+        <li>CHEM 380 - Chemical and Instrumental Methods of Identification of Organic Compounds (4)</li>
+        <li>MBB 309W - Biochemistry Laboratory (4)</li>
+        <li>MBB 321 - Intermediary Metabolism (3)</li>
+        <li>MBB 331 - Molecular Biology (4)</li>
+      </ul>
+
+      <h3>Additional Course Options</h3>
+      <p><strong>One of the following courses:</strong></p>
+      <ul>
+        <li>CHEM 360 - Thermodynamics and Chemical Kinetics (3)</li>
+        <li>MBB 323 - Introduction to Physical Biochemistry (3)</li>
+      </ul>
+
+      <p>A minimum of six units chosen from either MBB 324 and/or any 400-level MBB courses, and a minimum of two upper division chemistry courses, including at least 3 units at the 400-level (excluding CHEM 481).</p>
     </div>
   );
-}
+};
 
-export default App;
+export default ProgramRequirements;
