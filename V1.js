@@ -36,17 +36,20 @@ const courses = {
 };
 
 export default function NotionChecklist() {
-  const [checked, setChecked] = useState({});
-  const [selectedElectives, setSelectedElectives] = useState({});
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [selectedElectives, setSelectedElectives] = useState<Record<string, string | null>>({});
 
-  const toggleCheck = (code, electiveGroup) => {
+  const toggleCheck = (code: string, electiveGroup?: string) => {
     if (electiveGroup) {
-      setSelectedElectives((prev) => {
-        const updatedGroup = prev[electiveGroup] === code ? null : code;
-        return { ...prev, [electiveGroup]: updatedGroup };
-      });
+      setSelectedElectives(prev => ({
+        ...prev,
+        [electiveGroup]: prev[electiveGroup] === code ? null : code
+      }));
     } else {
-      setChecked((prev) => ({ ...prev, [code]: !prev[code] }));
+      setChecked(prev => ({
+        ...prev,
+        [code]: !prev[code]
+      }));
     }
   };
 
@@ -58,11 +61,16 @@ export default function NotionChecklist() {
           {subjects.map(({ code, name, credits, electiveGroup }) => (
             <div key={code} className="flex justify-between items-center border-b py-2">
               <div>
-                <p className="font-medium">{code} - {name} ({credits} credits) {electiveGroup ? "(Choose one)" : ""}</p>
+                <p className="font-medium">
+                  {code} - {name} ({credits} credits) 
+                  {electiveGroup && " (Choose one)"}
+                </p>
               </div>
               <input
                 type="checkbox"
-                checked={electiveGroup ? selectedElectives[electiveGroup] === code : checked[code] || false}
+                checked={electiveGroup 
+                  ? selectedElectives[electiveGroup] === code 
+                  : checked[code] ?? false}
                 onChange={() => toggleCheck(code, electiveGroup)}
                 className="w-5 h-5"
               />
